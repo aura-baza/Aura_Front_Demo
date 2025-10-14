@@ -1,4 +1,4 @@
-// ✅ Define la URL base del backend. Si no hay variable de entorno, usa localhost.
+// Define la URL base del backend. Si no hay variable de entorno, usa localhost.
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 
 class ApiClient {
@@ -10,7 +10,7 @@ class ApiClient {
   constructor(baseURL: string) {
     this.baseURL = baseURL;
 
-    // ⚠️ Solo ejecuta en el navegador (no en SSR)
+    // Solo ejecuta en el navegador (no en SSR)
     if (typeof window !== "undefined") {
       this.token = localStorage.getItem("auth_token");
       this.refreshToken = localStorage.getItem("refresh_token");
@@ -18,7 +18,7 @@ class ApiClient {
   }
 
   /**
-   * 🧩 Guarda los tokens en memoria y en localStorage
+   *   Guarda los tokens en memoria y en localStorage
    * - accessToken: se usa para las peticiones
    * - refreshToken: se usa cuando el access expira
    */
@@ -37,7 +37,7 @@ class ApiClient {
   }
 
   /**
-   * ♻️ Intenta renovar el access token usando el refresh token
+   *   Intenta renovar el access token usando el refresh token
    * - Si tiene éxito, actualiza ambos tokens.
    * - Si falla, cierra sesión automáticamente.
    */
@@ -52,10 +52,10 @@ class ApiClient {
         body: JSON.stringify({ refreshToken: this.refreshToken }),
       });
 
-      // ❌ Si el refresh token ya no es válido, forzar logout
+      // Si el refresh token ya no es válido, forzar logout
       if (!response.ok) throw new Error("Refresh token failed");
 
-      // ✅ Si todo va bien, guarda los nuevos tokens
+      // Si todo va bien, guarda los nuevos tokens
       const data = await response.json();
       this.setToken(data.accessToken, data.refreshToken ?? this.refreshToken);
       return true;
@@ -69,7 +69,7 @@ class ApiClient {
   }
 
   /**
-   * 🚀 Método central que realiza las solicitudes HTTP.
+   *  Método central que realiza las solicitudes HTTP.
    * - Añade el token al header.
    * - Si el token expira (401/403), intenta renovarlo y reintenta la petición.
    */
@@ -90,11 +90,11 @@ class ApiClient {
 
     let response = await fetch(url, { ...options, headers });
 
-    // ⚠️ Si la API responde 401 o 403 → el token expiró
+    // Si la API responde 401 o 403 → el token expiró
     if (response.status === 401 || response.status === 403) {
       const refreshed = await this.refreshAccessToken();
 
-      // 🔁 Si el refresh fue exitoso, reintenta la petición original
+      //  Si el refresh fue exitoso, reintenta la petición original
       if (refreshed && this.token) {
         headers.Authorization = `Bearer ${this.token}`;
         response = await fetch(url, { ...options, headers });
@@ -103,17 +103,17 @@ class ApiClient {
       }
     }
 
-    // 🚨 Manejo de errores genérico (por ejemplo 404 o 500)
+    //  Manejo de errores genérico (por ejemplo 404 o 500)
     if (!response.ok) {
       const error = await response.json().catch(() => ({ message: "Network error" }));
       throw new Error(error.message || `HTTP error! status: ${response.status}`);
     }
 
-    // ✅ Devuelve el cuerpo en JSON (tipo genérico <T>)
+    // Devuelve el cuerpo en JSON (tipo genérico <T>)
     return response.json();
   }
 
-  // 🌐 Métodos CRUD que reutilizan request():
+  //  Métodos CRUD que reutilizan request():
   async get<T>(endpoint: string): Promise<T> {
     return this.request<T>(endpoint, { method: "GET" });
   }
@@ -137,7 +137,7 @@ class ApiClient {
   }
 
   /**
-   * 🚪 Limpia tokens y deja al usuario completamente deslogueado
+   *  Limpia tokens y deja al usuario completamente deslogueado
    */
   logout() {
     this.token = null;
@@ -150,7 +150,7 @@ class ApiClient {
   }
 }
 
-// 🧠 Exporta una única instancia reutilizable en toda la app
+// Exporta una única instancia reutilizable en toda la app
 export const apiClient = new ApiClient(API_BASE_URL);
 
 // const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';

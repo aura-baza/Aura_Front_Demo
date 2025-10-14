@@ -1,8 +1,8 @@
-import React from 'react';
 import { Bell, Search, Settings, User, LogOut } from 'lucide-react';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
+const perfil="/avatar.webp";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,19 +12,21 @@ import {
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router';
 
 export const Header: React.FC = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate()
 
   const handleLogout = () => {
     logout();
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 px-6 py-4">
+    <header className=" border-b border-gray-200 px-6 py-4 !bg-[#308cc4]">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <h1 className="text-xl font-semibold text-gray-900">Admin Dashboard</h1>
+          {/* <h1 className="text-xl font-semibold text-gray-900">Admin Dashboard</h1> */}
         </div>
 
         <div className="flex items-center space-x-4">
@@ -33,7 +35,7 @@ export const Header: React.FC = () => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <Input
               type="text"
-              placeholder="Search..."
+              placeholder="Buscar..."
               className="pl-10 w-64"
             />
           </div>
@@ -49,9 +51,9 @@ export const Header: React.FC = () => {
           {/* User Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src="/avatars/admin.png" alt={user?.firstName} />
+              <Button variant="ghost" className="relative h-8 w-8 rounded-full cursor-pointer">
+                <Avatar className="h-8 w-8 ">
+                  <AvatarImage src={perfil} alt={user?.firstName} />
                   <AvatarFallback>
                     {user?.firstName?.[0]}{user?.lastName?.[0]}
                   </AvatarFallback>
@@ -72,16 +74,16 @@ export const Header: React.FC = () => {
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <User className="mr-2 h-4 w-4" />
-                <span>Profile</span>
+                <span className='cursor-pointer'>Perfil</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
+                <Settings className="mr-2 h-4 w-4 " />
+                <span className='cursor-pointer'>Configuracion</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleLogout}>
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
+                <LogOut   className="mr-2 h-4 w-4" />
+                <span onClick={()=>navigate("/")} className='cursor-pointer'>Salir</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

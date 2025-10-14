@@ -4,7 +4,7 @@ import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Card, CardContent, CardHeader } from '../components/ui/card';
 import { Eye, EyeOff } from 'lucide-react';
-import auraLogo from '../../public/Aura_Community-1.png';
+import auraLogo from '/Aura_Community-1.png';
 import { useNavigate } from 'react-router';
 
 export async function loader() {
@@ -25,12 +25,13 @@ export default function Login({ onLogin }: LoginProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 ">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-sm shadow-lg">
         <CardHeader className="text-center pb-0 w-auto">
           {/* Logo clickeable de AURA */}
           <div 
-            className="flex justify-center cursor-pointer hover:opacity-80 transition-opacity"
+            className="flex justify-center "
+            //cursor-pointer hover:opacity-80 transition-opacity propiedades las tenía el logo
             // onClick={() => navigate("/dashboard")}
             title="Hacer clic para acceder al dashboard"
           >
@@ -51,7 +52,7 @@ export default function Login({ onLogin }: LoginProps) {
                 type="email"
                 placeholder="usuario@affinitybpo.com.co"
                 className="h-10 bg-gray-50 border-gray-200 focus:border-teal-500 focus:ring-teal-500 text-sm"
-                required
+                // required
               />
             </div>
             

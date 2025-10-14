@@ -14,7 +14,7 @@ function Caret({ open }: { open: boolean }) {
     <ChevronRight
       className={`w-4 h-4 transition-transform duration-200 ${
         open ? "rotate-90" : "rotate-0"
-      } text-slate-500`}
+      } text-slate-900`}
     />
   );
 }
@@ -50,9 +50,9 @@ export default function Sidebar() {
   }, [location.pathname]);
 
   return (
-    <aside className="w-64 bg-white border-r border-slate-100 min-h-screen p-4">
+    <aside className="w-64 bg-white  min-h-screen p-4 !rounded-tr-4xl rounded-br-4xl z-100 shadow-xl">
       <div className="mb-6 px-2">
-        <img src={auraLogo} alt="Aura Community" className="w-40" />
+        <img src={auraLogo} alt="Aura Community" className="w-auto" />
       </div>
 
       <nav aria-label="Sidebar menu" className="space-y-1">
@@ -86,7 +86,7 @@ export default function Sidebar() {
                       : "max-h-0 opacity-0 py-0"
                   }`}
                 >
-                  <ul className="space-y-1 pl-4 border-l border-slate-100">
+                  <ul className="space-y-1 pl-4  border-l border-slate-100 ">
                     {item.children.map((child) => (
                       <li key={child.id}>
                         <NavLink

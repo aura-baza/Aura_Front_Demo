@@ -10,12 +10,12 @@ export default [
     route("home", "routes/dashboard/home.tsx"),
     
     // 📦 Alimentación (con subrutas)
-    route("alimentacion", "routes/dashboard/feeding/_layout.tsx", [
+    route("alimentacion", "routes/feeding/_layout.tsx", [
       // index("routes/dashboard/feeding/lunch.tsx"), // opcional: que el index sea almuerzos
-      route("almuerzos", "routes/dashboard/feeding/lunch.tsx"),
-      route("cenas", "routes/dashboard/feeding/dinner.tsx"),
-      route("almuerzos-totales", "routes/dashboard/feeding/lunch-menu.tsx"),
-      route("cenas-totales", "routes/dashboard/feeding/dinner-menu.tsx"),
+      route("almuerzos", "routes/feeding/lunch.tsx"),
+      route("cenas", "routes/feeding/dinner.tsx"),
+      route("almuerzos-totales", "routes/feeding/lunch-menu.tsx"),
+      route("cenas-totales", "routes/feeding/dinner-menu.tsx"),
    
     ]),
   ]),
