@@ -1,12 +1,15 @@
+/*
+// Dashboard Index Route//
+ *Esta es la ruta principal del módulo "Dashboard".
+ *Cuando un usuario accede a /dashboard, se muestra este componente por defecto.
+ *Aquí se renderiza el componente <Dashboard />, que actúa como la vista general del panel.
+ */
 import Dashboard from "~/components/Dashboard";
 
 export default function DashboardIndex() {
   return (
     <div>
-      {/* <h1 className="text-3xl font-bold text-gray-800">Bienvenido al Dashboard 🎉</h1>
-      <p className="text-gray-600 mt-2">
-        Esta es tu página principal dentro del dashboard.
-      </p> */}
+      {/* Renderiza el componente principal del dashboard */}
       <Dashboard/>
     </div>
   );

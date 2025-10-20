@@ -1,23 +1,33 @@
-import { Outlet } from "react-router-dom";
-import { Header } from "~/components/Header";
-import Sidebar from "~/components/Sidebar";
+/*
+//Dashboard Layout//
+*Este layout define la estructura base del panel principal
+*(Dashboard) de la plataforma de administración de recursos humanos.
+*Aquí se renderizan el encabezado (Header), la barra lateral (Sidebar)
+ y el contenido dinámico según la ruta actual del usuario.
+ */
 
-export default function DashboardLayout() {
+// import { Outlet } from "react-router-dom";
+// import { Header } from "~/components/Header";
+import AppLayout from "~/components/layout/AppLayout";
+// import Sidebar from "~/components/Sidebar";
+
+export default function DashboardLayout({ children }: { children?: React.ReactNode }) {
+    // Contenedor principal: ocupa toda la altura de la pantalla
+    // y define un fondo neutro para la interfaz del Dashboard
   return (
-    <div className="min-h-screen flex bg-slate-50">
-      <Sidebar />
-      <div className="flex-1">
-          <Header/>
-        {/* <header className="  border-slate-200 p-4 !bg-[#78b342] ">
-          <h1 className="text-xl font-semibold text-slate-800 ">
-            Panel de Administración
-          </h1>
-        </header> */}
-
-        <main className="p-6">
-          <Outlet />
-        </main>
-      </div>
-    </div>
+    // <div className="min-h-screen flex bg-slate-50 ">
+    //   {/* Barra lateral de navegación */}
+    //   <Sidebar />
+    //   {/* Contenedor del contenido principal */}
+    //   <div className="flex-1">
+    //     {/* Encabezado superior del Dashboard */}
+    //       <Header/>
+    //       {/* Área principal donde se renderizan las rutas hijas */}
+    //     <main className="p-6">
+    //       {children || <Outlet />}
+    //     </main>
+    //   </div>
+    // </div>
+    <AppLayout/>
   );
 }

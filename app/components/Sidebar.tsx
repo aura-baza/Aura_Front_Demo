@@ -50,7 +50,7 @@ export default function Sidebar() {
   }, [location.pathname]);
 
   return (
-    <aside className="w-64 bg-white  min-h-screen p-4 !rounded-tr-4xl rounded-br-4xl z-100 shadow-xl">
+    <aside className="w-64 bg-white  min-h-screen p-4 !rounded-tr-[50px] rounded-br-[40px] z-1000 shadow-xl">
       <div className="mb-6 px-2">
         <img src={auraLogo} alt="Aura Community" className="w-auto" />
       </div>
@@ -63,7 +63,7 @@ export default function Sidebar() {
                 <button
                   type="button" // ✅ evita comportamientos de submit
                   onClick={() => toggle(item.id)}
-                  className={`w-full text-left flex items-center justify-between px-3 py-2 rounded-md hover:!bg-[#78b342] focus:outline-none transition ${
+                  className={`w-full text-left flex items-center justify-between px-3 py-2 rounded-md hover:!bg-[#78b342] focus:outline-none transition${
                     openIds[item.id] ? " !bg-[#78b342]" : ""
                   }`}
                   aria-expanded={!!openIds[item.id]}

@@ -45,7 +45,7 @@ export const UserFilters: React.FC<UserFiltersProps> = ({
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
           <Input
-            placeholder="Search users by name, username, or email..."
+            placeholder="Buscar usuarios"
             value={filters.search || ''}
             onChange={(e) => handleSearchChange(e.target.value)}
             className="pl-10"
@@ -58,10 +58,10 @@ export const UserFilters: React.FC<UserFiltersProps> = ({
             <SelectValue placeholder="Filter by status" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Status</SelectItem>
-            <SelectItem value={USER_STATUS.ACTIVE}>Active</SelectItem>
-            <SelectItem value={USER_STATUS.INACTIVE}>Inactive</SelectItem>
-            <SelectItem value={USER_STATUS.SUSPENDED}>Suspended</SelectItem>
+            <SelectItem value="all">Todos los estados</SelectItem>
+            <SelectItem value={USER_STATUS.ACTIVE}>Activo</SelectItem>
+            <SelectItem value={USER_STATUS.INACTIVE}>Inactivo</SelectItem>
+            <SelectItem value={USER_STATUS.SUSPENDED}>Retirado</SelectItem>
           </SelectContent>
         </Select>
 
@@ -71,7 +71,7 @@ export const UserFilters: React.FC<UserFiltersProps> = ({
             <SelectValue placeholder="Filter by department" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Departments</SelectItem>
+            <SelectItem value="all">Todos los departemantos</SelectItem>
             {DEPARTMENTS.map((dept) => (
               <SelectItem key={dept} value={dept}>
                 {dept}

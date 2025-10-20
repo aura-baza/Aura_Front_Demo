@@ -46,8 +46,8 @@ export default function Dashboard() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat) => (
-          <Card key={stat.name}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <Card key={stat.name} className='transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#a9e770] cursor-pointer'>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 ">
               <CardTitle className="text-sm font-medium text-gray-600">
                 {stat.name}
               </CardTitle>
@@ -60,7 +60,7 @@ export default function Dashboard() {
                 stat.changeType === 'negative' ? 'text-red-600' :
                 'text-gray-600'
               }`}>
-                {stat.change} from last month
+                {stat.change} Del mes pasado
               </p>
             </CardContent>
           </Card>
@@ -69,10 +69,10 @@ export default function Dashboard() {
 
       {/* Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
+        <Card  className='transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#a9e770] cursor-pointer'>
           <CardHeader>
-            <CardTitle>Recent User Activity</CardTitle>
-            <CardDescription>Latest user registrations and updates</CardDescription>
+            <CardTitle>Actividad reciente del usuario</CardTitle>
+            <CardDescription>Últimos registros de usuarios y actualizaciones</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -94,35 +94,35 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card  className='transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 hover:bg-[#a9e770] cursor-pointer'>
           <CardHeader>
             <CardTitle>Estado del sistema</CardTitle>
-            <CardDescription>Current system health and performance</CardDescription>
+            <CardDescription>Estado y rendimiento actuales del sistema</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span>Database</span>
+                <span>Bases De Datos</span>
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                   Healthy
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span>API Services</span>
+                <span>Servicios De API </span>
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                   Online
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span>Authentication</span>
+                <span>Autenticaciones</span>
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                  Active
+                  Activo
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span>Background Jobs</span>
+                <span>Trabajos en segundo plano</span>
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                  Processing
+                  En Proceso
                 </span>
               </div>
             </div>

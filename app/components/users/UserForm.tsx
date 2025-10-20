@@ -1,14 +1,19 @@
+// Importa React y useEffect para manejar efectos secundarios
 import React, { useEffect } from 'react';
+// Importamos useForm desde react-hook-form para manejar formularios y validaciones
 import { useForm } from 'react-hook-form';
+// Componentes reutilizables de Shadcn UI
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
 import { Checkbox } from '~/components/ui/checkbox';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
+// Tipos de datos para usuario
 import type { User, CreateUserRequest, UpdateUserRequest } from '~/types/user';
+// Constantes como estados de usuario y departamentos
 import { USER_STATUS, DEPARTMENTS } from '~/utils/constants';
-
+//Interfaz que define la forma de los datos del formulario
 interface UserFormData {
   username: string;
   email: string;
@@ -19,29 +24,40 @@ interface UserFormData {
   status: 'active' | 'inactive' | 'suspended';
   roleIds: string[];
 }
-
+/*
+ * Props que recibe este componente:
+ * - user: datos del usuario si estamos editando
+ * - onSubmit: función que se ejecuta al enviar el formulario
+ * - onCancel: función que se ejecuta al cancelar
+ * - isLoading: estado de carga para deshabilitar botones
+ */
 interface UserFormProps {
   user?: User;
   onSubmit: (data: CreateUserRequest | UpdateUserRequest) => Promise<void>;
   onCancel: () => void;
   isLoading?: boolean;
 }
-
+/* Lista de roles simulada (moqueada),
+ * esto luego se cambiaría por datos reales desde backend
+ */
 const mockRoles = [
   { id: '1', name: 'Admin', description: 'Full system access' },
   { id: '2', name: 'HR Manager', description: 'HR management access' },
-  { id: '3', name: 'Manager', description: 'Team management access' },
-  { id: '4', name: 'Employee', description: 'Basic employee access' },
+  { id: '3', name: 'Supervisor', description: 'Team management access' },
+  { id: '4', name: 'Agente', description: 'Basic employee access' },
   { id: '5', name: 'Viewer', description: 'Read-only access' }
 ];
 
+// Componente principal
 export const UserForm: React.FC<UserFormProps> = ({
   user,
   onSubmit,
   onCancel,
   isLoading = false
 }) => {
+   // Si existe un usuario, estamos editando
   const isEditing = !!user;
+  // Inicialización de react-hook-form
   const { register, handleSubmit, formState: { errors }, setValue, watch, reset } = useForm<UserFormData>({
     defaultValues: {
       username: user?.username || '',
@@ -54,9 +70,12 @@ export const UserForm: React.FC<UserFormProps> = ({
       roleIds: user?.roles.map(r => r.id) || []
     }
   });
-
+ // Observar roles seleccionados en tiempo real
   const selectedRoleIds = watch('roleIds') || [];
 
+  /* useEffect se ejecuta si se pasa un usuario (modo edición),
+   * y setea nuevamente el formulario con esos valores.
+   */
   useEffect(() => {
     if (user) {
       reset({
@@ -71,21 +90,23 @@ export const UserForm: React.FC<UserFormProps> = ({
       });
     }
   }, [user, reset]);
-
+  // Función para enviar el formulario
   const handleFormSubmit = async (data: UserFormData) => {
     const formData = {
       ...data,
-      roleIds: selectedRoleIds
+      roleIds: selectedRoleIds // aseguramos roles actualizados
     };
 
     if (!isEditing) {
+      // Si no estamos editando, es creación de usuario
       await onSubmit(formData as CreateUserRequest);
     } else {
+      // Si editamos, sólo enviamos password si el usuario lo escribió
       const { password, ...updateData } = formData;
       await onSubmit(password ? formData : updateData as UpdateUserRequest);
     }
   };
-
+   //Maneja agregar o remover roles del estado
   const handleRoleChange = (roleId: string, checked: boolean) => {
     const currentRoles = selectedRoleIds;
     if (checked) {
@@ -97,6 +118,7 @@ export const UserForm: React.FC<UserFormProps> = ({
 
   return (
     <Card className="w-full max-w-2xl">
+      {/* Encabezado del formulario */}
       <CardHeader>
         <CardTitle>{isEditing ? 'Edit User' : 'Create New User'}</CardTitle>
         <CardDescription>
@@ -107,6 +129,7 @@ export const UserForm: React.FC<UserFormProps> = ({
         </CardDescription>
       </CardHeader>
       <CardContent>
+        {/* Formulario */}
         <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
           {/* Basic Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -168,7 +191,7 @@ export const UserForm: React.FC<UserFormProps> = ({
               <p className="text-sm text-red-500">{errors.email.message}</p>
             )}
           </div>
-
+          {/* Mostrar password solo si es creación */}
           {!isEditing && (
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
@@ -187,7 +210,7 @@ export const UserForm: React.FC<UserFormProps> = ({
             </div>
           )}
 
-          {/* Department and Status */}
+           {/* Sección: Departamento y Estado */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="department">Department</Label>
@@ -227,7 +250,7 @@ export const UserForm: React.FC<UserFormProps> = ({
             </div>
           </div>
 
-          {/* Roles */}
+          {/* Sección: Roles */}
           <div className="space-y-3">
             <Label>Roles & Permissions</Label>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -249,7 +272,7 @@ export const UserForm: React.FC<UserFormProps> = ({
             </div>
           </div>
 
-          {/* Actions */}
+          {/* Sección: Roles */}
           <div className="flex justify-end space-x-3 pt-6 border-t">
             <Button type="button" variant="outline" onClick={onCancel}>
               Cancel

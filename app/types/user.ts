@@ -1,3 +1,6 @@
+// Interfaces de Usuario y Roles //
+
+// Representa un usuario dentro del sistema
 export interface User {
   id: string;
   username: string;
@@ -11,7 +14,7 @@ export interface User {
   createdAt: Date;
   updatedAt: Date;
 }
-
+// Representa un rol dentro del sistema (por ejemplo: Administrador, Empleado, etc.)
 export interface Role {
   id: string;
   name: string;
@@ -19,7 +22,7 @@ export interface Role {
   permissions: Permission[];
   color?: string;
 }
-
+// Representa un permiso granular (acción que un rol puede realizar)
 export interface Permission {
   id: string;
   name: string;
@@ -28,6 +31,9 @@ export interface Permission {
   description: string;
 }
 
+//Interfaces para Peticiones (Requests)//
+
+// Estructura esperada para crear un nuevo usuario
 export interface CreateUserRequest {
   username: string;
   email: string;
@@ -39,6 +45,7 @@ export interface CreateUserRequest {
   status: 'active' | 'inactive';
 }
 
+// Estructura esperada para actualizar un usuario existente
 export interface UpdateUserRequest {
   username?: string;
   email?: string;
@@ -49,6 +56,9 @@ export interface UpdateUserRequest {
   status?: 'active' | 'inactive' | 'suspended';
 }
 
+ //Filtros y Paginación//
+
+// Parámetros de filtrado para listados de usuarios
 export interface UserFilters {
   search?: string;
   status?: 'active' | 'inactive' | 'suspended' | 'all';
@@ -56,6 +66,7 @@ export interface UserFilters {
   department?: string;
 }
 
+//Estructura genérica para manejar respuestas paginadas desde la API
 export interface PaginatedResponse<T> {
   data: T[];
   total: number;

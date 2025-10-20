@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { MoreHorizontal, Edit, Trash2, Eye, CheckSquare } from 'lucide-react';
 import { Button } from '~/components/ui/button';
 import { Checkbox } from '~/components/ui/checkbox';
@@ -18,7 +18,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
-import {type User } from '~/types/user';
+import { type User } from '~/types/user';
 import { formatDistanceToNow } from 'date-fns';
 
 interface UserTableProps {
@@ -49,7 +49,7 @@ export const UserTable: React.FC<UserTableProps> = ({
       inactive: 'bg-gray-100 text-gray-800',
       suspended: 'bg-red-100 text-red-800'
     };
-    
+
     return (
       <Badge className={variants[status as keyof typeof variants] || variants.inactive}>
         {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -68,19 +68,21 @@ export const UserTable: React.FC<UserTableProps> = ({
           <TableRow>
             <TableHead className="w-12">
               <Checkbox
-                checked={allSelected}
+                // checked={allSelected}
+                // onCheckedChange={onSelectAll}
+                // ref={(ref) => {
+                //   if (ref) ref.indeterminate = someSelected;
+                // }}
+                checked={allSelected ? true : someSelected ? "indeterminate" : false}
                 onCheckedChange={onSelectAll}
-                ref={(ref) => {
-                  if (ref) ref.indeterminate = someSelected;
-                }}
               />
             </TableHead>
-            <TableHead>User</TableHead>
-            <TableHead>Email</TableHead>
+            <TableHead>Usuario</TableHead>
+            <TableHead>Correo</TableHead>
             <TableHead>Roles</TableHead>
-            <TableHead>Department</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Last Login</TableHead>
+            <TableHead>Departamentos</TableHead>
+            <TableHead>Estado</TableHead>
+            <TableHead>Último inicio de sesión</TableHead>
             <TableHead className="w-12"></TableHead>
           </TableRow>
         </TableHeader>
@@ -125,7 +127,7 @@ export const UserTable: React.FC<UserTableProps> = ({
               <TableCell>{getStatusBadge(user.status)}</TableCell>
               <TableCell>
                 <span className="text-sm text-gray-500">
-                  {user.lastLogin 
+                  {user.lastLogin
                     ? formatDistanceToNow(new Date(user.lastLogin), { addSuffix: true })
                     : 'Never'
                   }
@@ -141,18 +143,18 @@ export const UserTable: React.FC<UserTableProps> = ({
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem onClick={() => onViewUser(user)}>
                       <Eye className="mr-2 h-4 w-4" />
-                      View Details
+                      Ver Detalles
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => onEditUser(user)}>
                       <Edit className="mr-2 h-4 w-4" />
-                      Edit User
+                      Editar Usuario
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
+                    <DropdownMenuItem
                       onClick={() => onDeleteUser(user)}
                       className="text-red-600"
                     >
                       <Trash2 className="mr-2 h-4 w-4" />
-                      Delete User
+                      Eliminar Usuario
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -161,7 +163,7 @@ export const UserTable: React.FC<UserTableProps> = ({
           ))}
         </TableBody>
       </Table>
-      
+
       {users.length === 0 && (
         <div className="text-center py-12">
           <div className="text-gray-500">No users found</div>

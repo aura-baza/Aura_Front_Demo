@@ -1,7 +1,11 @@
+//Importamos el cliente de API (aún no se usa, pero quedará listo para la integración real)
 import { apiClient } from '../services/api';
+//Importamos los tipos TypeScript que definen la estructura de datos
 import type { User, CreateUserRequest, UpdateUserRequest, UserFilters, PaginatedResponse } from '../types/user';
 
-// Mock data for development
+/*Datos simulados (mock) para pruebas sin backend
+ *Representan usuarios de diferentes departamentos y estados
+ */
 const mockUsers: User[] = [
   {
     id: '1',
@@ -65,15 +69,24 @@ const mockUsers: User[] = [
   }
 ];
 
+/**
+ *Servicio de gestión de usuarios
+ *Centraliza toda la lógica CRUD (crear, leer, actualizar, eliminar)
+ */
 export const userService = {
+   /*Obtiene todos los usuarios con soporte de filtros y paginación.
+     *En producción haría una llamada como:
+     *apiClient.get(`/users?page=${page}&limit=${limit}&search=${filters.search}`)
+   */
   async getUsers(
     page: number = 1,
     limit: number = 25,
     filters: UserFilters = {}
   ): Promise<PaginatedResponse<User>> {
-    // Mock implementation with filtering
+     //Copiamos los usuarios simulados para no mutar el original
     let filteredUsers = [...mockUsers];
 
+    //Filtro por búsqueda general (nombre, email, usuario, apellido)
     if (filters.search) {
       const search = filters.search.toLowerCase();
       filteredUsers = filteredUsers.filter(user =>
@@ -83,21 +96,22 @@ export const userService = {
         user.lastName.toLowerCase().includes(search)
       );
     }
-
+    //Filtro por estado (activo, inactivo, suspendido, etc.)
     if (filters.status && filters.status !== 'all') {
       filteredUsers = filteredUsers.filter(user => user.status === filters.status);
     }
-
+    //Filtro por departamento
     if (filters.department) {
       filteredUsers = filteredUsers.filter(user => user.department === filters.department);
     }
-
+    //Filtro por rol
     if (filters.roleId) {
       filteredUsers = filteredUsers.filter(user =>
         user.roles.some(role => role.id === filters.roleId)
       );
     }
-
+    
+    //Paginación (divide resultados en páginas)
     const total = filteredUsers.length;
     const totalPages = Math.ceil(total / limit);
     const startIndex = (page - 1) * limit;
@@ -112,7 +126,7 @@ export const userService = {
       totalPages
     };
   },
-
+  // Obtiene un usuario específico por su ID
   async getUserById(id: string): Promise<User> {
     const user = mockUsers.find(u => u.id === id);
     if (!user) {
@@ -120,17 +134,21 @@ export const userService = {
     }
     return user;
   },
-
+ 
+    /*Crea un nuevo usuario
+     *En un backend real se haría:
+     *apiClient.post('/users', userData)
+   */
   async createUser(userData: CreateUserRequest): Promise<User> {
     // Mock implementation
     const newUser: User = {
-      id: Date.now().toString(),
+      id: Date.now().toString(),  // genera ID único temporal
       username: userData.username,
       email: userData.email,
       firstName: userData.firstName,
       lastName: userData.lastName,
       status: userData.status,
-      roles: [], // Would be populated based on roleIds
+      roles: [],// en producción se mapearían los IDs a objetos de rol
       department: userData.department,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -139,7 +157,7 @@ export const userService = {
     mockUsers.push(newUser);
     return newUser;
   },
-
+  // Actualiza un usuario existente
   async updateUser(id: string, userData: UpdateUserRequest): Promise<User> {
     const userIndex = mockUsers.findIndex(u => u.id === id);
     if (userIndex === -1) {
@@ -155,7 +173,7 @@ export const userService = {
     mockUsers[userIndex] = updatedUser;
     return updatedUser;
   },
-
+  //Elimina un usuario del sistema
   async deleteUser(id: string): Promise<void> {
     const userIndex = mockUsers.findIndex(u => u.id === id);
     if (userIndex === -1) {
@@ -164,7 +182,7 @@ export const userService = {
 
     mockUsers.splice(userIndex, 1);
   },
-
+  // Actualización masiva de usuarios (por ejemplo: cambiar estado o rol)
   async bulkUpdateUsers(userIds: string[], updates: Partial<UpdateUserRequest>): Promise<User[]> {
     const updatedUsers = mockUsers
       .filter(user => userIds.includes(user.id))
@@ -174,7 +192,7 @@ export const userService = {
         updatedAt: new Date()
       }));
 
-    // Update the mock data
+    // Sincroniza los datos simulados
     updatedUsers.forEach(updatedUser => {
       const index = mockUsers.findIndex(u => u.id === updatedUser.id);
       if (index !== -1) {

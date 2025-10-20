@@ -1,7 +1,12 @@
 
 // app/lib/menu.ts
-import { Home, ClipboardList, Users, Gift, Utensils, Medal, ArrowLeftRight, CalendarClock, TreePalm, UserStar, ShieldCheck } from "lucide-react";
+// Importación de íconos desde la librería "lucide-react".
+// Estos íconos se usarán para representar visualmente cada sección del menú.
+import { Home, ClipboardList, Users, Gift, Utensils, Medal, ArrowLeftRight, CalendarClock, TreePalm, UserStar, ShieldCheck, LogOut } from "lucide-react";
 
+
+// Interfaz que define la estructura de un elemento del menú lateral.
+// Permite incluir íconos, rutas y submenús (children).
 export interface MenuItem {
   id: string;
   label: string;
@@ -9,7 +14,8 @@ export interface MenuItem {
   to?: string;
   children?: MenuItem[];
 }
-
+// Arreglo principal con todos los elementos del menú de la plataforma.
+// Cada objeto representa una sección o módulo del sistema.
 export const MENU: MenuItem[] = [
   //INICIO
   {
@@ -23,22 +29,25 @@ export const MENU: MenuItem[] = [
     id: "feeding",
     label: "Alimentación",
     icon: Utensils,
+    to:"/feeding/lunch",
     children: [
-      { id: "lunch", label: "Almuerzos", to: "/dashboard/feeding/lunch" },
-      { id: "dinner", label: "Cenas", to: "/dashboard/feeding/dinner" },
-      { id: "lunch-menu", label: "Almuerzos Totales", to: "/dashboard/feeding/lunch-menu" },
-      { id: "dinner-menu", label: "Cenas Totales", to: "/dashboard/feeding/dinner-menu" },
+      { id: "lunch", label: "Almuerzos", to: "/feeding/lunch" },
+      { id: "dinner", label: "Cenas", to: "/feeding/dinner" },
+      { id: "lunch-menu", label: "Almuerzos Totales", to: "/feeding/lunch-menu" },
+      { id: "dinner-menu", label: "Cenas Totales", to: "/feeding/dinner-menu" },
     ],
+    
   },
   //REPORTES
   {
     id: "reportes",
     label: "Reportes",
     icon: ClipboardList,
-    to: "/dashboard/reportes",
+    to: "/reports/total-lunchs",
     children: [
-      { id: "total-lunch", label: "Almuerzos Totales", to: "/dashboard/feeding/lunch" },
-      { id: "total-dinner", label: "Cenas Totales", to: "/dashboard/feeding/dinner" },
+      // { id: "lunchs", label: "Almuerzos Totales", to: "/reports/_layout" },
+      { id: "total-lunch", label: "Almuerzos Totales", to: "/reports/total-lunchs" },
+      { id: "total-dinner", label: "Cenas Totales", to: "/reports/total-dinners" },
     ],
   },
   //PERMISOS
@@ -46,12 +55,12 @@ export const MENU: MenuItem[] = [
     id: "permisos",
     label: "Permisos",
     icon: Users,
-    to: "/dashboard/permisos",
+    to: "/permisos",
     children: [
-      { id: "lunch", label: "Listar Permisos", to: "/dashboard/feeding/lunch" },
-      { id: "dinner", label: "Tipo De Permiso", to: "/dashboard/feeding/dinner" },
-      { id: "lunch-menu", label: "Permiso Admin", to: "/dashboard/feeding/lunch-menu" },
-      { id: "dinner-menu", label: "Permiso Super", to: "/dashboard/feeding/dinner-menu" },
+      { id: "total-permissions", label: "Listar Permisos", to: "/#" },
+      { id: "permit-type", label: "Tipo De Permiso", to: "/#" },
+      { id: "admin-permission", label: "Permiso Admin", to: "/#" },
+      { id: "super-permission", label: "Permiso Super", to: "/#" },
     ],
   },
   //BENEFICIOS
@@ -59,12 +68,12 @@ export const MENU: MenuItem[] = [
     id: "beneficios",
     label: "Beneficios",
     icon: Medal,
-    to: "/dashboard/beneficios",
+    to: "/",
      children: [
-      { id: "lunch", label: "Listar Beneficios", to: "/dashboard/feeding/lunch" },
-      { id: "dinner", label: "Tipo Beneficio", to: "/dashboard/feeding/dinner" },
-      { id: "lunch-menu", label: "Beneficio Admin", to: "/dashboard/feeding/lunch-menu" },
-      { id: "dinner-menu", label: "Beneficio Supervisor", to: "/dashboard/feeding/dinner-menu" },
+      { id: "list-benefits", label: "Listar Beneficios", to: "/#" },
+      { id: "benefit-type", label: "Tipo Beneficio", to: "/#" },
+      { id: "admin-benefit", label: "Beneficio Admin", to: "/#" },
+      { id: "super-benefit", label: "Beneficio Supervisor", to: "/#" },
     ],
   },
   //CAMBIO DE TURNO 
@@ -72,11 +81,11 @@ export const MENU: MenuItem[] = [
     id: "turno",
     label: "Cambio De Turno",
     icon: ArrowLeftRight,
-    to: "/dashboard/turnos",
+    to: "/",
      children: [
-       { id: "lunch-menu", label: "Turno", to: "/dashboard/feeding/lunch-menu" },
-      { id: "lunch", label: "Turno Admin", to: "/dashboard/feeding/lunch" },
-      { id: "dinner", label: "Turno Supervisor", to: "/dashboard/feeding/dinner" },
+       { id: "shift", label: "Turno", to: "/#" },
+      { id: "admin-shift", label: "Turno Admin", to: "/#" },
+      { id: "super-shift", label: "Turno Supervisor", to: "/#" },
     ],
   },
   //HORARIO
@@ -84,11 +93,11 @@ export const MENU: MenuItem[] = [
     id: "horario",
     label: "Horario",
     icon: CalendarClock,
-    to: "/dashboard/horario",
+    to: "/",
      children: [
-      { id: "lunch", label: "Cambio Hororio", to: "/dashboard/feeding/lunch" },
-      { id: "dinner", label: "Horario Admin", to: "/dashboard/feeding/dinner" },
-      { id: "lunch-menu", label: "Horario Supervisor", to: "/dashboard/feeding/lunch-menu" },
+      { id: "schedule-change", label: "Cambio Horario", to: "/#" },
+      { id: "admin-schedule", label: "Horario Admin", to: "/#" },
+      { id: "super-schedule", label: "Horario Supervisor", to: "/#"},
     ],
   },
   //VACACIONES
@@ -96,10 +105,10 @@ export const MENU: MenuItem[] = [
     id: "vacaciones",
     label: "Vacaciones",
     icon: TreePalm,
-    to: "/dashboard/vacaciones",
+    to: "/",
      children: [
-      { id: "lunch", label: "Solicitar Vacaciones", to: "/dashboard/feeding/lunch" },
-      { id: "dinner", label: "Gestionar Vacaciones", to: "/dashboard/feeding/dinner" },
+      { id: "request-vacation", label: "Solicitar Vacaciones", to: "/#" },
+      { id: "manage-vacations", label: "Gestionar Vacaciones", to: "/#" },
     ],
   },
   //ADMINISTRACION
@@ -107,15 +116,15 @@ export const MENU: MenuItem[] = [
     id: "admin",
     label: "Administracion",
     icon: UserStar,
-    to: "/dashboard/admin",
+    to: "/administratrion",
      children: [
-      { id: "users", label: "Usuarios", to: "/dashboard/feeding/lunch" },
-      { id: "dinner", label: "Roles", to: "/dashboard/feeding/dinner" },
-      { id: "lunch-menu", label: "Visitas", to: "/dashboard/feeding/lunch-menu" },
-      { id: "dinner-menu", label: "Novedades", to: "/dashboard/feeding/dinner-menu" },
-      { id: "dinner", label: "Hora Limite", to: "/dashboard/feeding/dinner" },
-      { id: "dinner", label: "Programar Turno", to: "/dashboard/feeding/dinner" },
-      { id: "menu", label: "Menú", to: "/dashboard/feeding/dinner" },
+      { id: "users", label: "Usuarios", to: "/administration/users" },
+      { id: "roles", label: "Roles", to: "/#" },
+      { id: "visits", label: "Visitas", to: "/#" },
+      { id: "news", label: "Novedades", to: "/#" },
+      { id: "deadline-time", label: "Hora Limite", to: "/#" },
+      { id: "schedule-shift", label: "Programar Turno", to: "/#"},
+      { id: "menu", label: "Menú", to: "/#" },
     ],
   },
   //CALIDAD
@@ -123,13 +132,13 @@ export const MENU: MenuItem[] = [
     id: "calidad",
     label: "Calidad",
     icon: ShieldCheck,
-    to: "/dashboard/beneficios",
+    to: "",
      children: [
-      { id: "lunch", label: "Campaña", to: "/dashboard/feeding/lunch" },
-      { id: "dinner", label: "Categorias", to: "/dashboard/feeding/dinner" },
-      { id: "lunch-menu", label: "Preguntas", to: "/dashboard/feeding/lunch-menu" },
-      { id: "dinner-menu", label: "Formulario", to: "/dashboard/feeding/dinner-menu" },
-      { id: "dinner-menu", label: "Calificar", to: "/dashboard/feeding/dinner-menu" },
+      { id: "campaign", label: "Campaña", to: "/#" },
+      { id: "category", label: "Categorias", to: "/#" },
+      { id: "questions", label: "Preguntas", to: "/#" },
+      { id: "form", label: "Formulario", to: "/#" },
+      { id: "qualify", label: "Calificar", to: "/#" },
     ],
   },
 ];

@@ -1,7 +1,7 @@
 import AppLayout from "~/components/layout/AppLayout";
 
-export default function FeedingLayout() {
+export default function ReportesPage() {
   return (
-      <AppLayout/>
+    <AppLayout/>
   );
 }
